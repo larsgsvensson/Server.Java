@@ -7,20 +7,27 @@
   <title>${ title!header!"Linked Data Fragments Server" }</title>
   <link rel="shortcut icon" href="assets/favicon.ico">
   <link rel="stylesheet" href="${ assetsPath }style.css" />
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:700italic,400,700|Droid+Sans+Mono" type="text/css" />
+<!--   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:700italic,400,700|Droid+Sans+Mono" type="text/css" />-->
   <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
 </head>
 <body>
   <header>
-    <h1><a href="/">${header!"Linked Data Fragments Server"}</a></h1>
-    <figure class="logo">
-      <a href="http://linkeddatafragments.org/"><img src="${ assetsPath }logo.svg" alt="Linked Data Fragments" /></a>
+    <h1><a href=".">${header!"Linked Data Fragments Server"}</a></h1>
+    <figure class="logo" id="logo">
+      <a href="https://www.dnb.de/"><img src="${ assetsPath }dnb-logo.jpg" alt="Deutsche Nationalbibliothek (Link zur Startseite)" /></a>
+    </figure>
+    <figure class="logo" id="haeuser">
+      <img src="${ assetsPath }header_haeuser.gif" alt="Deutsche Nationalbibliothek, Leipzig und Frankfurt am Main" />
     </figure>
   </header>
+  <hr id="HeaderSeparator" />
   <main>
       <@contents/>
   </main>
   <footer>
+  <p>
+  	<a href="http://www.dnb.de/dataprotection">Data Protection Policy</a> - <a href="https://www.dnb.de/EN/impressum">Imprint</a>
+  </p>
     <p>
       Powered by a <a href="https://github.com/LinkedDataFragments/Server.java" target="_blank">Linked Data Fragments Server</a>
       ©2013–${date?string.yyyy} Ghent University - imec

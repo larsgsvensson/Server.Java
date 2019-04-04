@@ -28,7 +28,7 @@
 <div class="counts">
 <#if (triples?size > 0)>
   Showing triples ${ start } to ${ end } of
-  <#if totalEstimate != end>±</#if>
+  <#if totalEstimate != end>≈</#if>
   <span property="void:triples hydra:totalItems" datatype="xsd:integer" content="${ totalEstimate }">${ totalEstimate }</span>
   with <span property="hydra:itemsPerPage" datatype="xsd:integer" content="${ itemsPerPage }">${
     itemsPerPage

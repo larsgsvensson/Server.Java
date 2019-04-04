@@ -7,17 +7,11 @@
   },
 
   "datasources": {
-    "dbpedia": {
-      "title": "DBPedia",
+    "zdb": {
+      "title": "Zeitschriftendatenbank",
       "type": "HdtDatasource",
-      "description": "DBPedia with an HDT back-end",
-      "settings": { "file": "data/dbpedia.hdt" }
-    },
-    "swdf": {
-      "title": "Semantic Web Dog Food",
-      "type": "HdtDatasource",
-      "description": "Semantic Web Dog Food with an HDT back-end",
-      "settings": { "file": "data/swdf.hdt" }
+      "description": "Zeitschriftendatenbank with an HDT back-end",
+      "settings": { "file": "data/ZDBTitel.hdt" }
     }
   },
 

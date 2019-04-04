@@ -99,8 +99,8 @@ abstract public class FragmentRequestParserBase implements
 		}
 
 		/**
-		 * Returns the dataset URL
-		 * 
+		 * The dataset URL.
+		 *
 		 * @return the dataset URL. This consists of the base URL of the
 		 *         application, the servlet path and the pathinfo as supplied by
 		 *         request.getPathInfo()
@@ -116,15 +116,20 @@ abstract public class FragmentRequestParserBase implements
 	// ----- HELPERS ---------
 
 	/**
-	 *
+	 * Returns the base URL of this TPF server instance. If the server runs in
+	 * an application container (e. g. Tomcat, Wildfly etc.) the base URL will
+	 * contain all information up to and including the servlet context path.
+	 * 
 	 * @param request
 	 * @param config
-	 * @return
+	 * @return the base URL of this TPF server. The base URL consists of the URL
+	 *         scheme, the server name, the optional server port and the servlet
+	 *         context path.
 	 */
-
 	public static String extractBaseURL(final HttpServletRequest request,
 			final ConfigReader config) {
 		final String contextPath = request.getServletContext().getContextPath();
+		// final String contextPath = "";
 		if (config.getBaseURL() != null) {
 			return config.getBaseURL();
 		} else if ((request.getServerPort() == 80)

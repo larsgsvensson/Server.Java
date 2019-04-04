@@ -18,103 +18,119 @@ import com.google.gson.JsonParser;
  * @author <a href="http://olafhartig.de">Olaf Hartig</a>
  */
 public class ConfigReader {
-    private final Map<String, IDataSourceType> dataSourceTypes = new HashMap<>();
-    private final Map<String, JsonObject> dataSources = new HashMap<>();
-    private final Map<String, String> prefixes = new HashMap<>();
-    private final String baseURL;
+	private String title;
+	private final Map<String, IDataSourceType> dataSourceTypes = new HashMap<>();
+	private final Map<String, JsonObject> dataSources = new HashMap<>();
+	private final Map<String, String> prefixes = new HashMap<>();
+	private final String baseURL;
 
-    /**
-     * Creates a new configuration reader.
-     *
-     * @param configReader the configuration
-     */
-    public ConfigReader(Reader configReader) {
-        JsonObject root = new JsonParser().parse(configReader).getAsJsonObject();
-        this.baseURL = root.has("baseURL") ? root.getAsJsonPrimitive("baseURL").getAsString() : null;
-        
-        for (Entry<String, JsonElement> entry : root.getAsJsonObject("datasourcetypes").entrySet()) {
-            final String className = entry.getValue().getAsString();
-            dataSourceTypes.put(entry.getKey(), initDataSouceType(className) );
-        }
-        for (Entry<String, JsonElement> entry : root.getAsJsonObject("datasources").entrySet()) {
-            JsonObject dataSource = entry.getValue().getAsJsonObject();
-            this.dataSources.put(entry.getKey(), dataSource);
-        }
-        for (Entry<String, JsonElement> entry : root.getAsJsonObject("prefixes").entrySet()) {
-            this.prefixes.put(entry.getKey(), entry.getValue().getAsString());
-        }
-    }
+	/**
+	 * Creates a new configuration reader.
+	 *
+	 * @param configReader
+	 *            the configuration
+	 */
+	public ConfigReader(final Reader configReader) {
+		final JsonObject root = new JsonParser().parse(configReader)
+				.getAsJsonObject();
+		this.baseURL = root.has("baseURL") ? root.getAsJsonPrimitive("baseURL")
+				.getAsString() : null;
+		this.title = root.has("title") ? root.getAsJsonPrimitive("title")
+				.getAsString() : null;
 
-    /**
-     * Gets the data source types.
-     *
-     * @return a mapping of names of data source types to these types  
-     */
-    public Map<String, IDataSourceType> getDataSourceTypes() {
-        return dataSourceTypes;
-    }
+		for (final Entry<String, JsonElement> entry : root.getAsJsonObject(
+				"datasourcetypes").entrySet()) {
+			final String className = entry.getValue().getAsString();
+			this.dataSourceTypes.put(entry.getKey(),
+					initDataSouceType(className));
+		}
+		for (final Entry<String, JsonElement> entry : root.getAsJsonObject(
+				"datasources").entrySet()) {
+			final JsonObject dataSource = entry.getValue().getAsJsonObject();
+			this.dataSources.put(entry.getKey(), dataSource);
+		}
+		for (final Entry<String, JsonElement> entry : root.getAsJsonObject(
+				"prefixes").entrySet()) {
+			this.prefixes.put(entry.getKey(), entry.getValue().getAsString());
+		}
+	}
 
-    /**
-     * Gets the data sources.
-     *
-     * @return the data sources
-     */
-    public Map<String, JsonObject> getDataSources() {
-        return dataSources;
-    }
+	/**
+	 * Gets the data source types.
+	 *
+	 * @return a mapping of names of data source types to these types
+	 */
+	public Map<String, IDataSourceType> getDataSourceTypes() {
+		return this.dataSourceTypes;
+	}
 
-    /**
-     * Gets the prefixes.
-     *
-     * @return the prefixes
-     */
-    public Map<String, String> getPrefixes() {
-        return prefixes;
-    }
+	/**
+	 * Gets the data sources.
+	 *
+	 * @return the data sources
+	 */
+	public Map<String, JsonObject> getDataSources() {
+		return this.dataSources;
+	}
 
-    /**
-     * Gets the base URL
-     * 
-     * @return the base URL
-     */
-    public String getBaseURL() {
-        return baseURL;
-    }
+	/**
+	 * Gets the prefixes.
+	 *
+	 * @return the prefixes
+	 */
+	public Map<String, String> getPrefixes() {
+		return this.prefixes;
+	}
 
-    /**
-     * Loads a certain {@link IDataSourceType} class at runtime
-     * 
-     * @param className IDataSourceType class
-     * @return the created IDataSourceType object
-     */
-    protected IDataSourceType initDataSouceType( final String className )
-    {
-        final Class<?> c;
-        try {
-            c = Class.forName( className ); 
-        }
-        catch ( ClassNotFoundException e ) {
-            throw new IllegalArgumentException( "Class not found: " + className,
-                                                e );
-        }
+	/**
+	 * Gets the base URL
+	 *
+	 * @return the base URL
+	 */
+	public String getBaseURL() {
+		return this.baseURL;
+	}
 
-        final Object o;
-        try {
-            o = c.newInstance();
-        }
-        catch ( Exception e ) {
-            throw new IllegalArgumentException(
-                        "Creating an instance of class '" + className + "' " +
-                        "caused a " + e.getClass().getSimpleName() + ": " +
-                        e.getMessage(), e );
-        }
+	/**
+	 * Gets the title of this service, if it's set
+	 *
+	 * @return the title or <code>null</code> is there is no title set
+	 */
+	public String getTitle() {
+		return this.title;
+	}
 
-        if ( ! (o instanceof IDataSourceType) )
-            throw new IllegalArgumentException(
-                        "Class '" + className + "' is not an implementation " +
-                        "of IDataSourceType." );
+	/**
+	 * Loads a certain {@link IDataSourceType} class at runtime
+	 *
+	 * @param className
+	 *            IDataSourceType class
+	 * @return the created IDataSourceType object
+	 */
+	protected IDataSourceType initDataSouceType(final String className) {
+		final Class<?> c;
+		try {
+			c = Class.forName(className);
+		} catch (final ClassNotFoundException e) {
+			throw new IllegalArgumentException("Class not found: " + className,
+					e);
+		}
 
-        return (IDataSourceType) o;
-    }
+		final Object o;
+		try {
+			o = c.newInstance();
+		} catch (final Exception e) {
+			throw new IllegalArgumentException(
+					"Creating an instance of class '" + className + "' "
+							+ "caused a " + e.getClass().getSimpleName() + ": "
+							+ e.getMessage(), e);
+		}
+
+		if (!(o instanceof IDataSourceType))
+			throw new IllegalArgumentException("Class '" + className
+					+ "' is not an implementation " + "of IDataSourceType.");
+
+		return (IDataSourceType) o;
+	}
 
 }

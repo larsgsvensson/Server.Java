@@ -19,6 +19,10 @@ body {
   box-shadow: 2px 2px 15px 0px rgba(50, 50, 50, 0.75);
 }
 
+main {
+	margin-top: 107px;
+}
+
 h1, h2, h3, legend {
   margin: .4em 0 .2em;
   overflow: hidden;
@@ -131,12 +135,12 @@ header .logo {
 }
 header .logo a {
   position: absolute;
-  top: 20px;
-  margin-left: -100px;
-  border-bottom-width: 0px;
+  top: 15px;
+  left: 50px;
 }
 header .logo img {
-  width: 160px;
+  height: 77px;
+  width: 120px;
 }
 
 footer {
@@ -211,6 +215,7 @@ dd {
   color: gray;
   margin: .1em 0 0 12em;
   font-size: .95em;
+  clear:left;
 }
 
 #about {
